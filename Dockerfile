@@ -36,3 +36,23 @@ EXPOSE 8080 8443
 
 #Debug CMD
 CMD ["/bin/bash"]
+
+#These permission changes need to happen after initial boot
+#chmod -R 755 /opt/manageengine-sdp/ServiceDesk
+
+#chown -R postgres:postgres /opt/manageengine-sdp/ServiceDesk
+
+#chown -R postgres:postgres /opt/manageengine-sdp/ServiceDesk/pgsql
+
+#chmod -R 700 /opt/manageengine-sdp/ServiceDesk/pgsql/data
+
+#chmod +x /opt/manageengine-sdp/ServiceDesk/pgsql/bin/pg_ctl
+
+#chmod +x /opt/manageengine-sdp/ServiceDesk/bin/startDB.sh
+
+#su -c '/opt/manageengine-sdp/ServiceDesk/bin/startDB.sh' postgres
+
+#./run.sh
+
+#They work but i still need to slim the permission up for security.
+
