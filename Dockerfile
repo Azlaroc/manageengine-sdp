@@ -26,33 +26,17 @@ RUN chmod +x /opt/manageengine-sdp/ManageEngine_ServiceDesk_Plus.bin
 # Run the installer in silent mode using the installer properties file
 RUN /opt/manageengine-sdp/ManageEngine_ServiceDesk_Plus.bin -i silent -f /opt/manageengine-sdp/installer.properties
 
+# Add a non-root user for ServiceDesk Plus
+RUN useradd -m servicedeskuser
+
+# Change ownership of the ServiceDesk Plus directory
+RUN chown -R servicedeskuser:servicedeskuser /opt/manageengine-sdp/ServiceDesk
+
+# Use the new user
+USER servicedeskuser
+
 # Expose necessary ports
 EXPOSE 8080 8443
 
 # Define the command to start ServiceDesk Plus
-
-# Normal CMD
-#CMD ["/opt/manageengine-sdp/ServiceDesk/bin/run.sh"]
-
-#Debug CMD
-CMD ["/bin/bash"]
-
-#These permission changes need to happen after initial boot
-#chmod -R 755 /opt/manageengine-sdp/ServiceDesk
-
-#chown -R postgres:postgres /opt/manageengine-sdp/ServiceDesk
-
-#chown -R postgres:postgres /opt/manageengine-sdp/ServiceDesk/pgsql
-
-#chmod -R 700 /opt/manageengine-sdp/ServiceDesk/pgsql/data
-
-#chmod +x /opt/manageengine-sdp/ServiceDesk/pgsql/bin/pg_ctl
-
-#chmod +x /opt/manageengine-sdp/ServiceDesk/bin/startDB.sh
-
-#su -c '/opt/manageengine-sdp/ServiceDesk/bin/startDB.sh' postgres
-
-#./run.sh
-
-#They work but i still need to slim the permission up for security.
-
+CMD ["/opt/manageengine-sdp/ServiceDesk/bin/run.sh"]
