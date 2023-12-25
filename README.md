@@ -4,7 +4,7 @@ This project contains the Dockerfile and necessary configurations to run ManageE
 
 ## Features
 
-- **Non-Root User:** Runs ServiceDesk Plus as a non-root user (`servicedesk`) for improved security.
+- **Non-Root User:** Runs ServiceDesk Plus as a non-root service user (`servicedesk`) for improved security.
 - **Customizable Installation:** Configuration options available through `installer.properties`.
 - **Flexible and Secure:** Designed with best practices in Docker containerization.
 
@@ -40,17 +40,12 @@ This project contains the Dockerfile and necessary configurations to run ManageE
 
 ### Configuration
 
-#### Environment Variables
-
-- `SDP_USER`: The username for the ServiceDesk application (default: `servicedesk`).
-- `SDP_PASSWORD`: The password for the ServiceDesk application.
-
 #### `installer.properties`
 
 This file contains various configuration options for ServiceDesk Plus. You can customize:
 
 - Installation directory
-- Database settings
+- Edition Selection
 - Port configurations
 - ...and more.
 
@@ -61,7 +56,6 @@ To customize your installation, edit the `installer.properties` file before buil
 ### User Details
 
 - **Username:** The default username is `servicedesk`.
-- **Password:** The default password is set in the `installer.properties` file.
 
 ## Usage
 
