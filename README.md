@@ -46,17 +46,12 @@ This file contains various configuration options for ServiceDesk Plus. You can c
 
 - Installation directory
 - Edition Selection
-- Edition Selection
 - Port configurations
 - ...and more.
 
 ### Customization
 
 To customize your installation, edit the `installer.properties` file before building the Docker image. 
-
-### User Details
-
-- **Username:** The default username is `servicedesk`.
 
 ## Usage
 
