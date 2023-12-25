@@ -1,67 +1,59 @@
 # ManageEngine ServiceDesk Plus Docker Image
 
-This project contains the Dockerfile and necessary configurations to run ManageEngine ServiceDesk Plus in a Docker container. The setup includes a non-root user for enhanced security and supports various configuration options through an `installer.properties` file.
+This project contains the necessary configurations to run ManageEngine ServiceDesk Plus in a Docker container. It's designed for enhanced security, flexibility, and customization.
 
 ## Features
 
-- **Non-Root User:** Runs ServiceDesk Plus as a non-root service user (`servicedesk`) for improved security.
-- **Customizable Installation:** Configuration options available through `installer.properties`.
-- **Flexible and Secure:** Designed with best practices in Docker containerization.
+- **Non-Root User:** Runs as a non-root user (`servicedesk`) for security.
+- **Customizable Installation:** Through `installer.properties`.
+- **UID/GID Mapping:** Aligns file permissions with the host system.
+- **Docker Compose Integration:** For easy setup and management.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Docker installed on your system.
-- Basic understanding of Docker commands and concepts.
+- Docker and Docker Compose installed.
+- Basic understanding of Docker and shell scripting.
+- Git (optional, for cloning the repository).
 
 ### Installation
 
-1. **Clone the Repository:**
+1. **Clone the Repository (Optional):**
    ```bash
    git clone [repository-url]
    cd [repository-name]
    ```
 
-2. **Build the Docker Image:**
+2. **Run the Setup Script:**
    ```bash
-   docker build -t managedengine-sdp .
+   ./run-docker-compose.sh
    ```
 
-3. **Run the Container from the local cloned git repo:**
-   ```bash
-   docker run -d -p 8080:8080 -p 8443:8443 --name managedengine-sdp managedengine-sdp
-   ```
-   
-5. **Run the Container from the GHCR repo:**
+3. **Alternatively, Run the Container from the GHCR repo:**
+   If you prefer not to build the image yourself, you can run the container directly from the GitHub Container Registry:
    ```bash
    docker run -d -p 8080:8080 -p 8443:8443 --name managedengine-sdp ghcr.io/azlaroc/manageengine-sdp:latest
    ```
 
-### Configuration
+### Key Files and Their Roles
 
-#### `installer.properties`
+- `.env`: Defines environment variables for PostgreSQL and host port configurations.
+- `docker-compose.yml`: Configures the Docker multi-container setup, including service definitions and volume mappings.
+- `Dockerfile`: Contains instructions for building the Docker image, setting up the non-root user, and installing dependencies.
+- `entrypoint.sh`: The script that runs on container startup, checks for ServiceDesk Plus installation, and starts the service.
+- `installer.properties`: Configuration file for customizing the ServiceDesk Plus installation.
+- `ManageEngine_ServiceDesk_Plus.bin`: The binary installer for ManageEngine ServiceDesk Plus.
+- `run-docker-compose.sh`: Script to set the current user's UID and GID and run Docker Compose.
 
-This file contains various configuration options for ServiceDesk Plus. You can customize:
+### Usage
 
-- Installation directory
-- Edition Selection
-- Port configurations
-- ...and more.
-
-### Customization
-
-To customize your installation, edit the `installer.properties` file before building the Docker image. 
-
-## Usage
-
-After running the container, access ServiceDesk Plus at `http://localhost:8080` or `https://localhost:8443`.
+After running the setup script, access ServiceDesk Plus at `http://localhost:<HOST_PORT_SDP_HTTP>` or `https://localhost:<HOST_PORT_SDP_HTTPS>`.
 
 ## Contributing
 
-Contributions to this project are welcome. Please ensure to follow the best practices and coding standards.
+Contributions are welcome. Please follow best practices and coding standards.
 
 ## License
 
-Use at your own risk.
-
+Use at your own risk. Adhere to the licensing terms of ManageEngine ServiceDesk Plus and Docker.
