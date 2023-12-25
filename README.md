@@ -1,5 +1,3 @@
-# manageengine-sdp
-
 # ManageEngine ServiceDesk Plus Docker Image
 
 This project contains the Dockerfile and necessary configurations to run ManageEngine ServiceDesk Plus in a Docker container. The setup includes a non-root user for enhanced security and supports various configuration options through an `installer.properties` file.
