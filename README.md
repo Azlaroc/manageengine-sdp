@@ -70,4 +70,5 @@ Contributions to this project are welcome. Please ensure to follow the best prac
 
 ## License
 
-[Specify the license or insert the license file content here]
+Use at your own risk.
+
