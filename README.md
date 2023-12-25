@@ -1,5 +1,3 @@
-# manageengine-sdp
-
 # ManageEngine ServiceDesk Plus Docker Image
 
 This project contains the Dockerfile and necessary configurations to run ManageEngine ServiceDesk Plus in a Docker container. The setup includes a non-root user for enhanced security and supports various configuration options through an `installer.properties` file.
@@ -30,13 +28,14 @@ This project contains the Dockerfile and necessary configurations to run ManageE
    docker build -t managedengine-sdp .
    ```
 
-3. **Run the Container:**
+3. **Run the Container from the local cloned git repo:**
    ```bash
-   #To run the container from the local cloned git repo
    docker run -d -p 8080:8080 -p 8443:8443 --name managedengine-sdp managedengine-sdp
-
-   #To run the container from the GHCR repo
-   docker run -d -p 9090:8080 -p 9443:8443 --name managedengine-sdp ghcr.io/azlaroc/manageengine-sdp:latest
+   ```
+   
+5. **Run the Container from the GHCR repo:**
+   ```bash
+   docker run -d -p 8080:8080 -p 8443:8443 --name managedengine-sdp ghcr.io/azlaroc/manageengine-sdp:latest
    ```
 
 ### Configuration
