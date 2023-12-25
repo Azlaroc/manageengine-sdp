@@ -37,7 +37,7 @@ This project contains the Dockerfile and necessary configurations to run ManageE
    
 5. **Run the Container from the GHCR repo:**
    ```bash
-   docker run -d -p 9090:8080 -p 9443:8443 --name managedengine-sdp ghcr.io/azlaroc/manageengine-sdp:latest
+   docker run -d -p 8080:8080 -p 8443:8443 --name managedengine-sdp ghcr.io/azlaroc/manageengine-sdp:latest
    ```
 
 ### Configuration
