@@ -21,24 +21,19 @@ RUN mkdir -p /opt/manageengine-sdp && chown servicedesk:servicedesk /opt/managee
 # Switch to the non-root user
 USER servicedesk
 
-# Set the working directory to where the ServiceDesk Plus installation files should be copied
+# Set the working directory
 WORKDIR /opt/manageengine-sdp
 
-# Copy the ServiceDesk Plus installation file and installer properties file into the container
+# Copy the ServiceDesk Plus installation file, installer properties file, and entrypoint script into the container
 # Ensure the copied files are owned by the servicedesk user
 # Note: You need to have these files in your build context
-COPY --chown=servicedesk:servicedesk ManageEngine_ServiceDesk_Plus.bin installer.properties /opt/manageengine-sdp/
+COPY --chown=servicedesk:servicedesk ManageEngine_ServiceDesk_Plus.bin installer.properties entrypoint.sh /opt/manageengine-sdp/
 
-# Give execution permissions to the installer and run it
-RUN chmod +x /opt/manageengine-sdp/ManageEngine_ServiceDesk_Plus.bin && \
-    ./ManageEngine_ServiceDesk_Plus.bin -i silent -f installer.properties
-
-# Change the working directory to the ServiceDesk Plus 'bin' directory
-# Note: Update the path according to where ServiceDesk Plus is installed
-WORKDIR /opt/manageengine-sdp/ServiceDesk/bin
+# Give execution permissions to the entrypoint script
+RUN chmod +x /opt/manageengine-sdp/entrypoint.sh
 
 # Expose necessary ports
 EXPOSE 8080 8443
 
-# Define the command to start ServiceDesk Plus
-CMD ["./run.sh"]
+# Set the entrypoint script
+ENTRYPOINT ["/opt/manageengine-sdp/entrypoint.sh"]

@@ -11,14 +11,16 @@ services:
     ports:
       - "${HOST_PORT_PGSQL}:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - /opt/manageengine-sdp/db-data:/var/lib/postgresql/data
 
   manageengine-sdp:
-    image: ghcr.io/azlaroc/manageengine-sdp:dev  # Or your own built image
+    image: manageengine-sdp
     container_name: manageengine-sdp
     ports:
       - "${HOST_PORT_SDP_HTTP}:8080"
       - "${HOST_PORT_SDP_HTTPS}:8443"
+    volumes:
+      - /opt/manageengine-sdp:/opt/manageengine-sdp
     environment:
       DB_HOST: ${POSTGRES_HOST}
       DB_PORT: ${POSTGRES_PORT}
@@ -27,6 +29,3 @@ services:
       DB_PASS: ${POSTGRES_PASSWORD}
     depends_on:
       - manageengine-sdp-db
-
-volumes:
-  postgres_data:
