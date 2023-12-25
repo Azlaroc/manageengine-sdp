@@ -32,7 +32,7 @@ This project contains the Dockerfile and necessary configurations to run ManageE
 
 3. **Run the Container:**
    ```bash
-   docker run -d -p 9090:8080 -p 9443:8443 --name managedengine-sdp managedengine-sdp
+   docker run -d -p 8080:8080 -p 8443:8443 --name managedengine-sdp managedengine-sdp
    ```
 
 ### Configuration
@@ -62,7 +62,7 @@ To customize your installation, edit the `installer.properties` file before buil
 
 ## Usage
 
-After running the container, access ServiceDesk Plus at `http://localhost:9090` or `https://localhost:9443`.
+After running the container, access ServiceDesk Plus at `http://localhost:8080` or `https://localhost:8443`.
 
 ## Contributing
 
