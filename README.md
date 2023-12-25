@@ -32,7 +32,11 @@ This project contains the Dockerfile and necessary configurations to run ManageE
 
 3. **Run the Container:**
    ```bash
+   #To run the container from the local cloned git repo
    docker run -d -p 8080:8080 -p 8443:8443 --name managedengine-sdp managedengine-sdp
+
+   #To run the container from the GHCR repo
+   docker run -d -p 9090:8080 -p 9443:8443 --name managedengine-sdp ghcr.io/azlaroc/manageengine-sdp:latest
    ```
 
 ### Configuration
