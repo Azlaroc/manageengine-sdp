@@ -27,8 +27,10 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.manageengine-sdp.entrypoints=websecure"
-      - "traefik.http.routers.manageengine-sdp.rule=Host(`servicedesk.cetechlab.com`)"
+      - "traefik.http.routers.manageengine-sdp.rule=Host(`servicedesk.${TRAEFIK_DOMAIN}`)"
+      - "traefik.http.routers.manageengine-sdp.middlewares=globalHeaders@file,secureHeaders@file,cloudflarewarp@docker,authelia@docker"
       - "traefik.http.routers.manageengine-sdp.tls.certresolver=cfdns"
+      - "traefik.http.routers.manageengine-sdp.tls.options=securetls@file"
       - "traefik.http.services.manageengine-sdp.loadbalancer.server.port=8443"
     ports:
       - "${HOST_PORT_SDP_HTTP}:8080"

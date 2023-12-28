@@ -9,7 +9,7 @@ fi
 
 # Stop and remove Docker containers and volumes
 echo "Stopping Docker containers..."
-docker-compose down -v
+docker compose down -v
 
 # Remove directories
 echo "Removing directories..."
