@@ -57,28 +57,3 @@ Contributions are welcome. Please follow best practices and coding standards.
 ## License
 
 Use at your own risk. Adhere to the licensing terms of ManageEngine ServiceDesk Plus and Docker.
-
-#!/bin/bash
-
-# Confirmation prompt
-read -p Are you sure you want to reset the environment? This will remove all existing data. (y/N):  confirm
-if [[ $confirm != [yY] ]]; then
-    echo Reset cancelled.
-    exit 1
-fi
-
-# Stop and remove Docker containers and volumes
-echo Stopping Docker containers...
-docker stop manageengine-sdp
-docker remove manageengine-sdp
-
-# Remove directories
-echo Removing directories...
-sudo rm -rf /opt/manageengine-sdp
-
-echo Reset complete.
-
-
-
-
-
