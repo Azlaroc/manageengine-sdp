@@ -9,7 +9,8 @@ fi
 
 # Stop and remove Docker containers and volumes
 echo "Stopping Docker containers..."
-docker compose down -v
+docker stop manageengine-sdp
+docker remove manageengine-sdp
 
 # Remove directories
 echo "Removing directories..."

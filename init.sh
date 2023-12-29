@@ -13,12 +13,4 @@ sudo mkdir -p /opt/manageengine-sdp/db-data || { echo "Failed to create db-data 
 echo "Setting permissions..."
 sudo chown -R $CURRENT_UID:$CURRENT_GID /opt/manageengine-sdp || { echo "Failed to set permissions"; exit 1; }
 
-# Run Docker Compose with error checking
-echo "Starting Docker containers..."
-docker compose build || { echo "Docker build failed"; exit 1; }
-docker compose up -d || { echo "Docker compose up failed"; exit 1; }
-
 echo "Initialization complete."
-
-
-
