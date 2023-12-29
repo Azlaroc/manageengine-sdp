@@ -2,17 +2,18 @@ version: '3.8'
 
 services:
   manageengine-sdp-db:
-    image: postgres
-    container_name: ${POSTGRES_HOST}
+    image: mysql:5.7  # Using MySQL 5.7; change as needed
+    container_name: ${DB_HOST}
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      MYSQL_DATABASE: ${DB_DB}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}  # Root password, can be same or different
     ports:
-      - "${HOST_PORT_PGSQL}:5432"
+      - "9306:3306"  # Using DB_HPORT for MySQL port
     volumes:
-      - /opt/manageengine-sdp/db-data:/var/lib/postgresql/data
+      - /opt/manageengine-sdp/db-data:/var/lib/mysql  # Adjust for MySQL
     networks:
       - saltbox
 
@@ -25,24 +26,29 @@ services:
     container_name: manageengine-sdp
     restart: unless-stopped
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.manageengine-sdp.entrypoints=websecure"
-      - "traefik.http.routers.manageengine-sdp.rule=Host(`servicedesk.${TRAEFIK_DOMAIN}`)"
-      - "traefik.http.routers.manageengine-sdp.middlewares=globalHeaders@file,secureHeaders@file,cloudflarewarp@docker,authelia@docker"
-      - "traefik.http.routers.manageengine-sdp.tls.certresolver=cfdns"
-      - "traefik.http.routers.manageengine-sdp.tls.options=securetls@file"
-      - "traefik.http.services.manageengine-sdp.loadbalancer.server.port=8443"
+      traefik.enable: "true"
+      traefik.http.routers.manageengine-sdp-http.entrypoints: "web"
+      traefik.http.routers.manageengine-sdp-http.middlewares: "globalHeaders@file,redirect-to-https@docker,cloudflarewarp@docker,authelia@docker"
+      traefik.http.routers.manageengine-sdp-http.rule: "Host(`$TRAEFIK_HOST.$TRAEFIK_DOMAIN`)"
+      traefik.http.routers.manageengine-sdp-http.service: "manageengine-sdp"
+      traefik.http.routers.manageengine-sdp.entrypoints: "websecure"
+      traefik.http.routers.manageengine-sdp.middlewares: "globalHeaders@file,secureHeaders@file,cloudflarewarp@docker,authelia@docker"
+      traefik.http.routers.manageengine-sdp.rule: "Host(`$TRAEFIK_HOST.$TRAEFIK_DOMAIN`)"
+      traefik.http.routers.manageengine-sdp.service: "manageengine-sdp"
+      traefik.http.routers.manageengine-sdp.tls.certresolver: "cfdns"
+      traefik.http.routers.manageengine-sdp.tls.options: "securetls@file"
+      traefik.http.services.manageengine-sdp.loadbalancer.server.port: "8080"
     ports:
       - "${HOST_PORT_SDP_HTTP}:8080"
       - "${HOST_PORT_SDP_HTTPS}:8443"
     volumes:
       - /opt/manageengine-sdp/ServiceDesk:/opt/manageengine-sdp/ServiceDesk
     environment:
-      DB_HOST: ${POSTGRES_HOST}
-      DB_PORT: ${POSTGRES_PORT}
-      DB_NAME: ${POSTGRES_DB}
-      DB_USER: ${POSTGRES_USER}
-      DB_PASS: ${POSTGRES_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: 3306  # Standard MySQL port
+      DB_NAME: ${DB_DB}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASSWORD}
     depends_on:
       - manageengine-sdp-db
     networks:

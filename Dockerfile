@@ -39,4 +39,8 @@ RUN chmod +x /opt/manageengine-sdp/entrypoint.sh
 EXPOSE 8080 8443
 
 # Set the entrypoint script
-ENTRYPOINT ["/opt/manageengine-sdp/entrypoint.sh"]
+#ENTRYPOINT ["/opt/manageengine-sdp/entrypoint.sh"]
+
+# DEBUG
+# Start with a Bash shell
+CMD ["/bin/bash"]
