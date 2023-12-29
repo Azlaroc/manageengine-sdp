@@ -31,15 +31,13 @@ This project contains the necessary configurations to run ManageEngine ServiceDe
 
 4. **Run the Setup Script:**
    ```bash
-   docker run -it -p 8080:8080 -p 8443:8443 --name manageengine-sdp -v /opt/manageengine-sdp/ServiceDesk:/opt/m
-anageengine-sdp/ServiceDesk manageengine-sdp
+   docker run -it -p 8080:8080 -p 8443:8443 --name manageengine-sdp -v /opt/manageengine-sdp/ServiceDesk:/opt/manageengine-sdp/ServiceDesk manageengine-sdp
    ```
 
 5. **Alternatively, Run the Container from the GHCR repo:**
    If you prefer not to build the image yourself, you can run the container directly from the GitHub Container Registry:
    ```bash
-   docker run -d -p 8080:8080 -p 8443:8443 --name managedengine-sdp -v /opt/manageengine-sdp/ServiceDesk:/opt/m
-anageengine-sdp/ServiceDesk ghcr.io/azlaroc/manageengine-sdp:latest
+   docker run -d -p 8080:8080 -p 8443:8443 --name managedengine-sdp -v /opt/manageengine-sdp/ServiceDesk:/opt/manageengine-sdp/ServiceDesk ghcr.io/azlaroc/manageengine-sdp:latest
    ```
 
 ### Key Files and Their Roles
@@ -53,8 +51,10 @@ anageengine-sdp/ServiceDesk ghcr.io/azlaroc/manageengine-sdp:latest
 
 ### DB Info
 
+```bash
 cd /opt/manageengine-sdp/ServiceDesk/pgsql/bin/
 ./psql -h localhost -U sdpadmin -W sdp@123 -p 65432 -d servicedesk
+```
 
 ### Usage
 
