@@ -10,27 +10,8 @@ services:
         GID: ${GID:-1000}
     container_name: manageengine-sdp
     restart: unless-stopped
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.manageengine-sdp-http.entrypoints: "web"
-      traefik.http.routers.manageengine-sdp-http.middlewares: "globalHeaders@file,redirect-to-https@docker,cloudflarewarp@docker,authelia@docker"
-      traefik.http.routers.manageengine-sdp-http.rule: "Host(`$TRAEFIK_HOST.$TRAEFIK_DOMAIN`)"
-      traefik.http.routers.manageengine-sdp-http.service: "manageengine-sdp"
-      traefik.http.routers.manageengine-sdp.entrypoints: "websecure"
-      traefik.http.routers.manageengine-sdp.middlewares: "globalHeaders@file,secureHeaders@file,cloudflarewarp@docker,authelia@docker"
-      traefik.http.routers.manageengine-sdp.rule: "Host(`$TRAEFIK_HOST.$TRAEFIK_DOMAIN`)"
-      traefik.http.routers.manageengine-sdp.service: "manageengine-sdp"
-      traefik.http.routers.manageengine-sdp.tls.certresolver: "cfdns"
-      traefik.http.routers.manageengine-sdp.tls.options: "securetls@file"
-      traefik.http.services.manageengine-sdp.loadbalancer.server.port: "8080"
-#    ports:
-#      - "${HOST_PORT_SDP_HTTP}:8080"
-#      - "${HOST_PORT_SDP_HTTPS}:8443"
+    ports:
+      - "${HOST_PORT_SDP_HTTP}:8080"
+      - "${HOST_PORT_SDP_HTTPS}:8443"
     volumes:
       - /opt/manageengine-sdp/ServiceDesk:/opt/manageengine-sdp/ServiceDesk
-    networks:
-      - saltbox
-
-networks:
-  saltbox:
-    external: true
