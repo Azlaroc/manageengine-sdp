@@ -1,5 +1,23 @@
 version: '3.8'
-manageengine-sdp:
+
+services:
+  manageengine-sdp-db:
+    image: mysql:5.7  # Using MySQL 5.7; change as needed
+    container_name: ${DB_HOST}
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DB}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}  # Root password, can be same or different
+    ports:
+      - "9306:3306"  # Using DB_HPORT for MySQL port
+    volumes:
+      - /opt/manageengine-sdp/db-data:/var/lib/mysql  # Adjust for MySQL
+    networks:
+      - saltbox
+
+  manageengine-sdp:
     build:
       context: .
       args:
@@ -25,6 +43,12 @@ manageengine-sdp:
       - "${HOST_PORT_SDP_HTTPS}:8443"
     volumes:
       - /opt/manageengine-sdp/ServiceDesk:/opt/manageengine-sdp/ServiceDesk
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: 3306  # Standard MySQL port
+      DB_NAME: ${DB_DB}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASSWORD}
     depends_on:
       - manageengine-sdp-db
     networks:
